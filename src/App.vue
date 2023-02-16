@@ -1,12 +1,18 @@
+<!-- eslint-disable no-unused-vars -->
+<script setup>
+import appLayout from "@/layout/appLayout.vue";
+</script>
+
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <appLayout>
+    <router-view />
+  </appLayout>
 </template>
 
 <style lang="scss">
+@import "~materialize-css/dist/css/materialize.min.css";
+@import "assets/css/index.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
