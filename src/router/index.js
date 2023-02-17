@@ -11,10 +11,45 @@ const routes = [
     path: "/login",
     name: "login",
     meta: { layout: "emptyLayout" },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ "@/pages/login"),
+  },
+  {
+    path: "/register",
+    name: "register",
+    meta: { layout: "emptyLayout" },
+    component: () => import(/* webpackChunkName: "reg"*/ "@/pages/register"),
+  },
+  {
+    path: "/details",
+    name: "details",
+    component: () => import(/* webpackChunkName: 'details'*/ "@/pages/details"),
+  },
+  {
+    path: "/history",
+    name: "history",
+    component: () => import(/* webpackChunkName: 'details'*/ "@/pages/history"),
+  },
+  {
+    path: "/categories",
+    name: "categories",
+    component: () =>
+      import(/* webpackChunkName: 'details'*/ "@/pages/categories"),
+  },
+  {
+    path: "/planning",
+    name: "planning",
+    component: () =>
+      import(/* webpackChunkName: 'details'*/ "@/pages/planning"),
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import(/* webpackChunkName: 'details'*/ "@/pages/profile"),
+  },
+  {
+    path: "/record",
+    name: "record",
+    component: () => import(/* webpackChunkName: 'details'*/ "@/pages/record"),
   },
 ];
 

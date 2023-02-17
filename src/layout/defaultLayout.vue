@@ -40,21 +40,25 @@
 
     <ul class="sidenav app-sidenav open">
       <li>
-        <a href="#" class="waves-effect waves-orange pointer">Счет</a>
+        <router-link :to="{ name: 'details' }">Счет</router-link>
       </li>
       <li>
-        <a href="#" class="waves-effect waves-orange pointer">История</a>
+        <router-link :to="{ name: 'history' }">История</router-link>
       </li>
       <li>
-        <a href="#" class="waves-effect waves-orange pointer">Планирование</a>
+        <router-link :to="{ name: 'planning' }">Планирование</router-link>
       </li>
       <li>
-        <a href="#" class="waves-effect waves-orange pointer">Новая запись</a>
+        <router-link :to="{ name: 'record' }">Новая запись</router-link>
       </li>
       <li>
-        <a href="#" class="waves-effect waves-orange pointer">Категории</a>
+        <router-link :to="{ name: 'categories' }">Категории</router-link>
       </li>
     </ul>
+
+    <main class="app-content">
+      <RouterView />
+    </main>
 
     <div class="fixed-action-btn">
       <a class="btn-floating btn-large blue" href="#">
