@@ -1,62 +1,24 @@
+<script setup>
+import navbar from "@/components/navbar";
+import sidebar from "@/components/sidebar";
+
+import { ref } from "vue";
+
+let isOpenSidebar = ref(true);
+</script>
+
 <template>
   <div class="app-main-layout">
-    <nav class="navbar orange lighten-1">
-      <div class="nav-wrapper">
-        <div class="navbar-left">
-          <a href="#">
-            <i class="material-icons black-text">dehaze</i>
-          </a>
-          <span class="black-text">12.12.12</span>
-        </div>
+    <navbar
+      @on-toggle-sidebar="
+        (isOpen) => {
+          isOpenSidebar = isOpen;
+        }
+      "
+    />
+    <sidebar :isOpenSidebar="isOpenSidebar" />
 
-        <ul class="right hide-on-small-and-down">
-          <li>
-            <a
-              class="dropdown-trigger black-text"
-              href="#"
-              data-target="dropdown"
-            >
-              USER NAME
-              <i class="material-icons right">arrow_drop_down</i>
-            </a>
-
-            <ul id="dropdown" class="dropdown-content">
-              <li>
-                <a href="#" class="black-text">
-                  <i class="material-icons">account_circle</i>Профиль
-                </a>
-              </li>
-              <li class="divider" tabindex="-1"></li>
-              <li>
-                <a href="#" class="black-text">
-                  <i class="material-icons">assignment_return</i>Выйти
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <ul class="sidenav app-sidenav open">
-      <li>
-        <router-link :to="{ name: 'details' }">Счет</router-link>
-      </li>
-      <li>
-        <router-link :to="{ name: 'history' }">История</router-link>
-      </li>
-      <li>
-        <router-link :to="{ name: 'planning' }">Планирование</router-link>
-      </li>
-      <li>
-        <router-link :to="{ name: 'record' }">Новая запись</router-link>
-      </li>
-      <li>
-        <router-link :to="{ name: 'categories' }">Категории</router-link>
-      </li>
-    </ul>
-
-    <main class="app-content">
+    <main class="app-content" :class="{ full: !isOpenSidebar }">
       <RouterView />
     </main>
 
