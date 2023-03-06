@@ -1,3 +1,11 @@
+<script setup></script>
+
+<script>
+export default {
+  name: "login",
+};
+</script>
+
 <template>
   <div>
     <form class="card auth-card">
@@ -33,7 +41,5 @@
     </form>
   </div>
 </template>
-
-<script setup></script>
 
 <style lang="scss"></style>
