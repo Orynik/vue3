@@ -1,8 +1,8 @@
 name: deploy on production 
 run-name: ${{ github.actor }} is learning GitHub Actions
 on: 
-push:
-  branches: ["master"]
+  push:
+    branches: ["master"]
 jobs:
   deploy:
     runs-on: ubuntu-latest
