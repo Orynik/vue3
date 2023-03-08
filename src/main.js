@@ -6,7 +6,7 @@ import "materialize-css/dist/js/materialize.min.js";
 import { initializeApp } from "firebase/app";
 
 import createPinia from "./store/createPinia";
-import { firebaseConfig } from "@/fbconfig";
+import { firebaseConfig } from "../fbconfig";
 
 // import { getAnalytics } from "firebase/analytics";
 

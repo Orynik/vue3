@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { loadLayoutMiddleware } from "@/router/middleware";
-import { useAuthStore } from "@/store";
+// import { useAuthStore } from "@/store";
 
-function checkAuth(to) {
-  const authStore = useAuthStore();
-  if (
-    authStore.user === null &&
-    !(to.name === "login" || to.name === "register")
-  ) {
-    return { name: "login", query: { msg: "auth-required" } };
-  }
+function checkAuth() {
+  // const authStore = useAuthStore();
+  //   if (
+  //     authStore.user === null &&
+  //     !(to.name === "login" || to.name === "register")
+  //   ) {
+  //     return { name: "login", query: { msg: "auth-required" } };
+  //   }
 }
 const routes = [
   {

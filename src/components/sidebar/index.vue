@@ -6,11 +6,11 @@ let props = defineProps({
 });
 
 let arrLinks = ref([
-  // { name: "details", title: "Счет", disabled: true },
-  // { name: "history", title: "История", disabled: true },
-  // { name: "planning", title: "Планирование", disabled: true },
-  // { name: "record", title: "Новая запись", disabled: true },
-  // { name: "categories", title: "Категории", disabled: true },
+  { name: "details", title: "Счет", disabled: true },
+  { name: "history", title: "История", disabled: true },
+  { name: "planning", title: "Планирование", disabled: true },
+  { name: "record", title: "Новая запись", disabled: true },
+  { name: "categories", title: "Категории", disabled: true },
 ]);
 </script>
 
