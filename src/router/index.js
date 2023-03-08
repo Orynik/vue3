@@ -1,6 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { loadLayoutMiddleware } from "@/router/middleware";
+import { useAuthStore } from "@/store";
 
+function checkAuth(to) {
+  const authStore = useAuthStore();
+  if (
+    authStore.user === null &&
+    !(to.name === "login" || to.name === "register")
+  ) {
+    return { name: "login", query: { msg: "auth-required" } };
+  }
+}
 const routes = [
   {
     path: "/",
@@ -58,6 +68,7 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach(checkAuth);
 router.beforeEach(loadLayoutMiddleware);
 
 export default router;

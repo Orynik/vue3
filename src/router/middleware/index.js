@@ -4,7 +4,7 @@ export async function loadLayoutMiddleware(route) {
   const normalizedLayoutName = layout || "defaultLayout";
   const fileNameWithoutExtension = normalizedLayoutName.split(".vue")[0];
 
-  console.log(fileNameWithoutExtension);
+  // console.log(fileNameWithoutExtension);
 
   const component = await import(`@/layout/${fileNameWithoutExtension}.vue`);
 

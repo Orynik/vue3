@@ -4,6 +4,9 @@ import { reactive } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/store";
+
+let authStore = useAuthStore();
 
 const state = reactive({
   email: "",
@@ -30,14 +33,14 @@ function formSubmit() {
 
   const formData = {
     email: state.email,
-    password: state.email,
+    password: state.password,
     name: state.name,
     isAgreePP: !!state.isAgreePP,
   };
 
-  console.log(formData);
-
-  router.push("/");
+  authStore.registerUser(formData).then(() => {
+    router.push("/");
+  });
 }
 </script>
 

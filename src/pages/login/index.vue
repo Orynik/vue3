@@ -1,12 +1,13 @@
 <script setup>
-import { reactive, inject, onMounted } from "vue";
+import { reactive } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+
+import { useAuthStore } from "@/store";
 
 const router = useRouter();
-const route = useRoute();
-const toaster = inject("toaster");
+const authState = useAuthStore();
 
 const state = reactive({
   email: "",
@@ -18,16 +19,9 @@ const rules = {
   password: { required, minLength: minLength(6) }, // Matches state.lastName
 };
 
-onMounted(() => {
-  //TODO: Переделать на params
-  if (route.query.msg) {
-    toaster.show(route.query.msg);
-  }
-});
-
 const v$ = useVuelidate(rules, state);
 
-function formSubmit() {
+async function formSubmit() {
   if (v$.value.$invalid) {
     v$.value.$touch();
     return;
@@ -35,12 +29,12 @@ function formSubmit() {
 
   const formData = {
     email: state.email,
-    password: state.email,
+    password: state.password,
   };
 
-  console.log(formData);
-
-  router.push("/");
+  await authState.signIn(formData).then(() => {
+    router.push("/");
+  });
 }
 </script>
 
@@ -58,7 +52,7 @@ export default {
         <div class="input-field">
           <input
             id="email"
-            type="text"
+            type="email"
             class="validate"
             v-model.trim="state.email"
             :class="{

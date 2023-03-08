@@ -2,6 +2,9 @@
 import { ref, defineEmits, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import { formatDate } from "@/helpers/formatDate";
+import { useAuthStore } from "@/store";
+
+let authStore = useAuthStore();
 
 let router = useRouter();
 let navbarDropdown = ref(null);
@@ -29,6 +32,7 @@ onBeforeUnmount(() => {
 //logOut
 // УЗнать, почему у меня не работают params
 function logout() {
+  authStore.signOut();
   router.push({
     name: "login",
     query: { msg: "logout" },
@@ -91,5 +95,3 @@ export default {
     </nav>
   </div>
 </template>
-
-<style lang="scss" scoped></style>
