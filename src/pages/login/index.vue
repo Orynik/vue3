@@ -1,8 +1,12 @@
 <script setup>
-import { reactive } from "vue"; // "from '@vue/composition-api'" if you are using Vue 2.x
+import { reactive, inject, onMounted } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
+const toaster = inject("toaster");
 
 const state = reactive({
   email: "",
@@ -14,8 +18,14 @@ const rules = {
   password: { required, minLength: minLength(6) }, // Matches state.lastName
 };
 
+onMounted(() => {
+  //TODO: Переделать на params
+  if (route.query.msg) {
+    toaster.show(route.query.msg);
+  }
+});
+
 const v$ = useVuelidate(rules, state);
-const router = useRouter();
 
 function formSubmit() {
   if (v$.value.$invalid) {
@@ -42,7 +52,7 @@ export default {
 
 <template>
   <div>
-    <form class="card auth-card" @submit.prevent="formSubmit()">
+    <form class="card auth-card" @submit.prevent="formSubmit">
       <div class="card-content">
         <span class="card-title">Домашняя бухгалтерия</span>
         <div class="input-field">
@@ -79,7 +89,7 @@ export default {
           />
           <label for="password">Пароль</label>
           <small
-            v-if="v$.password.$invalid && v$.email.$dirty"
+            v-if="v$.password.$invalid && v$.password.$dirty"
             class="helper-text invalid"
           >
             {{ v$.password.$silentErrors[0].$message }}
