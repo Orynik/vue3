@@ -1,4 +1,42 @@
-<script setup></script>
+<script setup>
+import { reactive } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { useRouter } from "vue-router";
+
+import { useAuthStore } from "@/store";
+
+const router = useRouter();
+const authState = useAuthStore();
+
+const state = reactive({
+  email: "",
+  password: "",
+});
+
+const rules = {
+  email: { email, required }, // Matches state.firstName
+  password: { required, minLength: minLength(6) }, // Matches state.lastName
+};
+
+const v$ = useVuelidate(rules, state);
+
+async function formSubmit() {
+  if (v$.value.$invalid) {
+    v$.value.$touch();
+    return;
+  }
+
+  const formData = {
+    email: state.email,
+    password: state.password,
+  };
+
+  await authState.signIn(formData).then(() => {
+    router.push("/");
+  });
+}
+</script>
 
 <script>
 export default {
@@ -8,18 +46,48 @@ export default {
 
 <template>
   <div>
-    <form class="card auth-card">
+    <form class="card auth-card" @submit.prevent="formSubmit">
       <div class="card-content">
         <span class="card-title">Домашняя бухгалтерия</span>
         <div class="input-field">
-          <input id="email" type="text" class="validate" />
+          <input
+            id="email"
+            type="email"
+            class="validate"
+            v-model.trim="state.email"
+            :class="{
+              invalid:
+                v$.email.$dirty &&
+                (v$.email.required.$invalid || v$.email.email.$invalid),
+            }"
+          />
           <label for="email">Email</label>
-          <small class="helper-text invalid">Email</small>
+          <small
+            v-if="v$.email.$invalid && v$.email.$dirty"
+            class="helper-text invalid"
+            >{{ v$.email.$silentErrors[0].$message }}</small
+          >
         </div>
         <div class="input-field">
-          <input id="password" type="password" class="validate" />
+          <input
+            id="password"
+            type="password"
+            class="validate"
+            v-model.trim="state.password"
+            :class="{
+              invalid:
+                v$.password.$dirty &&
+                (v$.password.required.$invalid ||
+                  v$.password.minLength.$invalid),
+            }"
+          />
           <label for="password">Пароль</label>
-          <small class="helper-text invalid">Password</small>
+          <small
+            v-if="v$.password.$invalid && v$.password.$dirty"
+            class="helper-text invalid"
+          >
+            {{ v$.password.$silentErrors[0].$message }}
+          </small>
         </div>
       </div>
       <div class="card-action">
@@ -35,7 +103,9 @@ export default {
 
         <p class="center">
           Нет аккаунта?
-          <a href="/">Зарегистрироваться</a>
+          <router-link :to="{ name: 'register' }">
+            Зарегистрироваться
+          </router-link>
         </p>
       </div>
     </form>

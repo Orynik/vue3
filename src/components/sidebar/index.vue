@@ -6,11 +6,11 @@ let props = defineProps({
 });
 
 let arrLinks = ref([
-  { name: "details", title: "Счет" },
-  { name: "history", title: "История" },
-  { name: "planning", title: "Планирование" },
-  { name: "record", title: "Новая запись" },
-  { name: "categories", title: "Категории" },
+  { name: "details", title: "Счет", disabled: true },
+  { name: "history", title: "История", disabled: true },
+  { name: "planning", title: "Планирование", disabled: true },
+  { name: "record", title: "Новая запись", disabled: true },
+  { name: "categories", title: "Категории", disabled: true },
 ]);
 </script>
 
@@ -23,8 +23,10 @@ export default {
 <template>
   <div>
     <ul class="sidenav app-sidenav" :class="{ open: props.isOpenSidebar }">
+      Скоро все будет!
       <router-link
         v-for="route in arrLinks"
+        :class="{ disabled: route.disabled }"
         :key="route.name"
         active-class="active"
         :to="{ name: route.name }"
