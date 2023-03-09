@@ -52,7 +52,7 @@ git clone git@github.com:Orynik/vue3.git && cd vue3
 yarn
 ```
 
-3. Добавить файл с конфигурацией firebase fbconfig.js внутрь папки src
+3. Добавить файл с конфигурацией firebase fbconfig.js внутрь папки src (Данные для заполнения ключей брать из собственного fb проекта)
 ```
 export let firebaseConfig = {
 apiKey: "",
