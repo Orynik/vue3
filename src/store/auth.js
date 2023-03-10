@@ -1,15 +1,16 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
-import showMessage from "@/helpers/toaster";
+} from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database';
 
-import { getDatabase, ref, set } from "firebase/database";
+import showMessage from '@/helpers/toaster';
+import { useUserStore } from './user';
 
-const useAuthStore = defineStore("authStore", {
+const useAuthStore = defineStore('authStore', {
   state: () => ({
     user: null,
   }),
@@ -34,9 +35,10 @@ const useAuthStore = defineStore("authStore", {
         );
 
         const db = getDatabase();
-        set(ref(db, "users/" + userData.user.uid), {
+        set(ref(db, 'users/' + userData.user.uid), {
           username: name,
           email: email,
+          bill: 0,
         });
       } catch (e) {
         this.errorMessage(e.code);
@@ -47,7 +49,8 @@ const useAuthStore = defineStore("authStore", {
       try {
         const auth = getAuth();
         signOut(auth);
-        showMessage("logout", "info");
+        showMessage('logout', 'info');
+        useUserStore().clearInfo();
       } catch (e) {
         this.errorMessage(e.code);
         throw e;
@@ -60,7 +63,7 @@ const useAuthStore = defineStore("authStore", {
     },
 
     errorMessage(text) {
-      showMessage(text, "error");
+      showMessage(text, 'error');
     },
   },
 });

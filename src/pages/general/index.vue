@@ -1,3 +1,21 @@
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useUserStore } from '@/store/user';
+
+const userStore = useUserStore();
+
+onMounted(() => {
+  userStore.fetchUserInfo();
+});
+
+</script>
+
+<script>
+export default {
+  name: 'general',
+};
+</script>
+
 <template>
   <main class="app-content">
     <div class="app-page">

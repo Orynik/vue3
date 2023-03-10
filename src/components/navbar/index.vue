@@ -1,15 +1,19 @@
 <script setup>
-import { ref, defineEmits, onMounted, onBeforeUnmount } from "vue";
-import { useRouter } from "vue-router";
-import { formatDate } from "@/helpers/formatDate";
-import { useAuthStore } from "@/store";
+import { ref, defineEmits, computed, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
+import { formatDate } from '@/helpers/formatDate';
+import { useUserStore } from '@/store/user';
+import { useAuthStore } from '@/store/auth';
 
 let authStore = useAuthStore();
+const userStore = useUserStore();
 
 let router = useRouter();
 let navbarDropdown = ref(null);
 let dateString = ref(null);
 let dateInterval = ref(0);
+
+let userName = computed(() => userStore.getUserName);
 
 let dropdown = null;
 
@@ -20,7 +24,7 @@ onMounted(() => {
   });
 
   dateInterval.value = setInterval(() => {
-    dateString.value = formatDate(new Date(), "datetime");
+    dateString.value = formatDate(new Date(), 'datetime');
   });
 });
 
@@ -34,25 +38,26 @@ onBeforeUnmount(() => {
 function logout() {
   authStore.signOut();
   router.push({
-    name: "login",
-    query: { msg: "logout" },
+    name: 'login',
+    query: { msg: 'logout' },
   });
 }
 
 //Toggle Sidebar
-const emit = defineEmits(["onToggleSidebar"]);
+const emit = defineEmits(['onToggleSidebar']);
 let isOpenSidebar = ref(true);
 function toggleSidebar() {
   isOpenSidebar.value = !isOpenSidebar.value;
-  emit("onToggleSidebar", isOpenSidebar.value);
+  emit('onToggleSidebar', isOpenSidebar.value);
 }
 </script>
 
 <script>
 export default {
-  name: "navbar",
+  name: 'navbar',
 };
 </script>
+
 <template>
   <div>
     <nav class="navbar orange lighten-1">
@@ -72,7 +77,7 @@ export default {
               href="#"
               data-target="dropdown"
             >
-              USER NAME
+              {{ userName }}
               <i class="material-icons right">arrow_drop_down</i>
             </a>
 

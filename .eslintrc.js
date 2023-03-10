@@ -21,6 +21,7 @@ module.exports = {
     'vue/no-unused-components': 2,
     'vue/custom-event-name-casing': 'off',
     'vue/multi-word-component-names': 0,
+    'prettier/prettier': 'warn',
   },
   overrides: [
     {

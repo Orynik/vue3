@@ -1,6 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import appLayout from "@/layout/appLayout.vue";
+import appLayout from '@/layout/appLayout.vue';
 </script>
 
 <template>
@@ -10,8 +10,8 @@ import appLayout from "@/layout/appLayout.vue";
 </template>
 
 <style lang="scss">
-@import "~materialize-css/dist/css/materialize.min.css";
-@import "assets/css/index.css";
+@import '~materialize-css/dist/css/materialize.min.css';
+@import 'assets/css/index.css';
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
