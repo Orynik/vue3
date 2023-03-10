@@ -1,13 +1,13 @@
 {
   "extends": [
-    "stylelint-config-standard-scss"
+    "stylelint-config-standard-scss",
+    "stylelint-config-recommended-vue",
+    "stylelint-config-prettier"
   ],
   "custom-syntax": "postcss-scss",
-  "plugins": [
-    "stylelint-order",
-    "stylelint-scss"
-  ],
+  "plugins": ["stylelint-order", "stylelint-scss", "stylelint-prettier"],
   "rules": {
+    "prettier/prettier": true,
     "selector-class-pattern": "",
     "scss/at-import-no-partial-leading-underscore": null,
     "block-no-empty": true,
@@ -24,18 +24,13 @@
     "property-no-unknown": [
       true,
       {
-        "ignoreProperties": [
-          "user-drag",
-          "font-smooth"
-        ]
+        "ignoreProperties": ["user-drag", "font-smooth"]
       }
     ],
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        "ignorePseudoElements": [
-          "v-deep"
-        ]
+        "ignorePseudoElements": ["v-deep"]
       }
     ],
     "order/properties-order": [
