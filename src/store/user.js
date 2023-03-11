@@ -13,10 +13,18 @@ const useUserStore = defineStore('userStore', {
     async fetchUserInfo() {
       try {
         const uid = useAuthStore().getUid();
+
+        if (!uid) {
+          throw {
+            pointThrow: 'fetchUserInfo',
+          };
+        }
+
         const refDB = getDatabase();
         this.userInfo = (await get(ref(refDB, `/users/${uid}`))).val();
       } catch (e) {
         showMessage(e.code, 'error');
+        throw e;
       }
     },
     clearInfo() {
@@ -26,6 +34,9 @@ const useUserStore = defineStore('userStore', {
   getters: {
     getUserName() {
       return this.userInfo?.username || '...';
+    },
+    getUserBill() {
+      return this.userInfo?.bill || 10000;
     },
   },
 });

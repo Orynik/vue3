@@ -1,18 +1,19 @@
 <script setup>
 // TODO: создать отдельный компонент для валидации
-import { reactive } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/store";
+import { reactive } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email, minLength } from '@vuelidate/validators';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/auth';
+
 
 let authStore = useAuthStore();
 
 const state = reactive({
-  email: "",
-  password: "",
-  name: "",
-  isAgreePP: "",
+  email: '',
+  password: '',
+  name: '',
+  isAgreePP: '',
 });
 
 const rules = {
@@ -39,7 +40,7 @@ function formSubmit() {
   };
 
   authStore.registerUser(formData).then(() => {
-    router.push("/");
+    router.push('/');
   });
 }
 </script>

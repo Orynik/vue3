@@ -1,13 +1,33 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useUserStore } from '@/store/user';
+import axios from 'axios';
 
-const userStore = useUserStore();
+import generalBill from '@/pages/general/_components/generalBill.vue';
+import generalCurrency from '@/pages/general/_components/generalCurrency.vue';
 
-onMounted(() => {
-  userStore.fetchUserInfo();
+let isLoading = ref(false);
+let objCurrency = ref({
+  date: '2023-03-11',
+  rates: { EUR: 0.938304, RUB: 76.20369, USD: 1 },
 });
 
+onMounted(() => {
+  fetchData();
+});
+
+async function fetchData() {
+  if (!isLoading.value) isLoading.value = true;
+
+  let res = await axios({
+    method: 'get',
+    url: 'https://api.apilayer.com/fixer/latest?symbols=RUB%2CEUR%2CUSD&base=USD',
+    headers: {
+      apikey: process.env.VUE_APP_FIXER,
+    },
+  });
+  objCurrency.value = res.data;
+  isLoading.value = false;
+}
 </script>
 
 <script>
@@ -19,60 +39,27 @@ export default {
 <template>
   <main class="app-content">
     <div class="app-page">
-      <div>
-        <div class="page-title">
-          <h3>Счет</h3>
+      <div class="page-title">
+        <h3>Счет</h3>
 
-          <button class="btn waves-effect waves-light btn-small">
-            <i class="material-icons">refresh</i>
-          </button>
-        </div>
+        <button
+          class="btn waves-effect waves-light btn-small"
+          @click="fetchData"
+        >
+          <i class="material-icons">refresh</i>
+        </button>
+      </div>
 
-        <div class="row">
-          <div class="col s12 m6 l4">
-            <div class="card light-blue bill-card">
-              <div class="card-content white-text">
-                <span class="card-title">Счет в валюте</span>
-
-                <p class="currency-line">
-                  <span>12.0 Р</span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col s12 m6 l8">
-            <div class="card orange darken-3 bill-card">
-              <div class="card-content white-text">
-                <div class="card-header">
-                  <span class="card-title">Курс валют</span>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Валюта</th>
-                      <th>Курс</th>
-                      <th>Дата</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>руб</td>
-                      <td>12121</td>
-                      <td>12.12.12</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+      <v-loader v-if="isLoading" />
+      <div v-else class="row">
+        <general-bill :objCurrency="objCurrency.rates"></general-bill>
+        <general-currency
+          :date="objCurrency.date"
+          :objCurrency="objCurrency.rates"
+        />
       </div>
     </div>
   </main>
 </template>
-
-<script setup></script>
 
 <style lang="scss" scoped></style>

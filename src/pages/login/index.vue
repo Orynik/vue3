@@ -1,17 +1,17 @@
 <script setup>
-import { reactive } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
-import { useRouter } from "vue-router";
+import { reactive } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email, minLength } from '@vuelidate/validators';
+import { useRouter } from 'vue-router';
 
-import { useAuthStore } from "@/store";
+import { useAuthStore } from '@/store/auth';
 
 const router = useRouter();
 const authState = useAuthStore();
 
 const state = reactive({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 });
 
 const rules = {
@@ -33,14 +33,14 @@ async function formSubmit() {
   };
 
   await authState.signIn(formData).then(() => {
-    router.push("/");
+    router.push('/');
   });
 }
 </script>
 
 <script>
 export default {
-  name: "login",
+  name: 'login',
 };
 </script>
 
